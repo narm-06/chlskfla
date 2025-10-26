@@ -8,11 +8,9 @@ except Exception:
     GPIO = None
     ON_RPI = False
 
-# --- BCM 모드 기준 ---
 BUZZER_BCM = 12
 SWITCH_PINS = [5, 6, 13, 19]  # SW1~SW4
 
-# --- 음계 주파수 (Hz) ---
 TONE = {
     "C": 262,   # 도
     "D": 294,   # 레
@@ -20,7 +18,6 @@ TONE = {
     "F": 349    # 파
 }
 
-# --- 스위치와 음계 매핑 ---
 NOTE_MAP = {
     5: "C",   # SW1 → 도
     6: "D",   # SW2 → 레
@@ -28,7 +25,6 @@ NOTE_MAP = {
     19: "F"   # SW4 → 파
 }
 
-# --- PWM 설정 ---
 DUTY_CYCLE = 50
 NOTE_DURATION = 0.4  # 한 음 재생 시간(초)
 
@@ -41,7 +37,7 @@ def play_tone(pin, freq, duration):
 
 def main():
     if not ON_RPI:
-        return  # 시뮬레이션 출력 제거
+        return  
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(BUZZER_BCM, GPIO.OUT)
@@ -60,7 +56,7 @@ def main():
                     freq = TONE[note]
                     play_tone(BUZZER_BCM, freq, NOTE_DURATION)
                 prev_state[pin] = curr
-            time.sleep(0.02)  # 디바운스
+            time.sleep(0.02)  
     except KeyboardInterrupt:
         pass
     finally:
